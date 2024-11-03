@@ -43,8 +43,22 @@ const primaryColors = ref([
 const surfaces = ref([
     {
         name: 'slate',
-        palette: { 0: '#ffffff', 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617' }
+        palette: {
+            0: '#e5e5e5', // Blanco más oscuro
+            50: '#dde1e4', // Gris muy claro
+            100: '#c7cbd3', // Gris claro
+            200: '#a3aab4', // Gris
+            300: '#7e8997', // Gris medio
+            400: '#606779', // Gris oscuro
+            500: '#4a4f63', // Gris aún más oscuro
+            600: '#35384f', // Gris muy oscuro
+            700: '#202339', // Gris muy, muy oscuro
+            800: '#0d1124', // Casi negro
+            900: '#0a0c1b', // Negro
+            950: '#02010c' // Negro absoluto
+        }
     },
+
     {
         name: 'gray',
         palette: { 0: '#ffffff', 50: '#f9fafb', 100: '#f3f4f6', 200: '#e5e7eb', 300: '#d1d5db', 400: '#9ca3af', 500: '#6b7280', 600: '#4b5563', 700: '#374151', 800: '#1f2937', 900: '#111827', 950: '#030712' }

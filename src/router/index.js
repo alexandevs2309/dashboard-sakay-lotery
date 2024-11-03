@@ -99,6 +99,13 @@ const router = createRouter({
                     name: 'crud',
                     component: () => import('@/views/pages/Crud.vue')
                 },
+
+                {
+                    path: '/pages/listabancas',
+                    name: 'listabancas',
+                    component: () => import('@/views/pages/ListaBancas.vue')
+                },
+
                 {
                     path: '/documentation',
                     name: 'documentation',
