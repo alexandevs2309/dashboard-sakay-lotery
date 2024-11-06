@@ -103,7 +103,12 @@ const router = createRouter({
                 {
                     path: '/pages/listabancas',
                     name: 'listabancas',
-                    component: () => import('@/views/pages/ListaBancas.vue')
+                    component: () => import('@/views/pages/ListaBancas.vue'),
+                },
+                {
+                    path: '/pages/bancaAdmin/:id',
+                    name: 'bancaAdmin',
+                    component: () => import('@/views/pages/BancaAdmin.vue')
                 },
 
                 {
@@ -138,7 +143,9 @@ const router = createRouter({
             path: '/auth/error',
             name: 'error',
             component: () => import('@/views/pages/auth/Error.vue')
-        }
+        },
+
+
     ]
 });
 

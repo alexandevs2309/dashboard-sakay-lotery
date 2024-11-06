@@ -49,18 +49,17 @@ const toggleSubMenu = (item) => {
 </template>
 
 <style scoped>
-/* Tu CSS permanece igual */
 .layout-sidebar {
     background-color: #fff;
     color: #888;
     height: 100vh;
-    width: 250px;
+    width: 180px;
     z-index: 997;
     margin-left: 10px;
     padding: 1rem 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     box-shadow:
         0px 3px 5px rgba(0, 0, 0, 0.02),
         0px 0px 2px rgba(0, 0, 0, 0.05),

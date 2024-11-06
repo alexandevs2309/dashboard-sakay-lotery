@@ -3,6 +3,7 @@ import { BancaService } from '@/service/BancaService';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 onMounted(() => {
     BancaService.getBancas().then((data) => (bancas.value = data));
@@ -114,6 +115,21 @@ function deleteSelectedBancas() {
     toast.add({ severity: 'success', summary: 'Successful', detail: 'Bancas Deleted', life: 3000 });
 }
 
+// En ListaBancas.vue
+
+const router = useRouter();
+
+const redirectToBancaAdmin = (banca) => {
+    console.log("Navegando a banca:", banca.id);
+    // Usa el name de la ruta en lugar de la URL directa
+    router.push({
+        name: 'bancaAdmin',
+        params: { id: banca.id }
+    }).catch(err => {
+        console.error('Error de navegación:', err);
+    });
+};
+
 function getStatusLabel(status) {
     switch (status) {
         case 'ACTIVA':
@@ -129,18 +145,11 @@ function getStatusLabel(status) {
 <template>
     <div>
         <div class="card">
-            <DataTable
-                ref="dt"
-                v-model:selection="selectedBancas"
-                :value="bancas"
-                dataKey="id"
-                :paginator="true"
-                :rows="10"
-                :filters="filters"
+            <DataTable ref="dt" v-model:selection="selectedBancas" :value="bancas" dataKey="id" :paginator="true"
+                :rows="10" :filters="filters"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} bancas"
-            >
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} bancas">
                 <!-- Barra de búsqueda -->
                 <template #header>
                     <div class="flex flex-wrap gap-2 items-center justify-between">
@@ -169,8 +178,13 @@ function getStatusLabel(status) {
                 </Column>
                 <Column :exportable="false" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editBanca(slotProps.data)" />
-                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteBanca(slotProps.data)" />
+                        
+                        <Button icon="pi pi-pencil" outlined rounded class="mr-2"
+                            @click="redirectToBancaAdmin(slotProps.data)" /> 
+                        
+                        <Button icon="pi pi-trash" outlined rounded
+                            severity="danger" @click="confirmDeleteBanca(slotProps.data)" />
+
                     </template>
                 </Column>
             </DataTable>
@@ -180,7 +194,8 @@ function getStatusLabel(status) {
             <div class="flex flex-col gap-6">
                 <div>
                     <label for="name" class="block font-bold mb-3">Name</label>
-                    <InputText id="name" v-model.trim="banca.name" required="true" autofocus :invalid="submitted && !banca.name" fluid />
+                    <InputText id="name" v-model.trim="banca.name" required="true" autofocus
+                        :invalid="submitted && !banca.name" fluid />
                     <small v-if="submitted && !banca.name" class="text-red-500">Name is required.</small>
                 </div>
                 <div>
@@ -189,7 +204,8 @@ function getStatusLabel(status) {
                 </div>
                 <div>
                     <label for="status" class="block font-bold mb-3">Status</label>
-                    <Select id="status" v-model="banca.status" :options="statuses" optionLabel="label" placeholder="Select a Status" fluid></Select>
+                    <Select id="status" v-model="banca.status" :options="statuses" optionLabel="label"
+                        placeholder="Select a Status" fluid></Select>
                 </div>
             </div>
 
@@ -202,10 +218,7 @@ function getStatusLabel(status) {
         <Dialog v-model:visible="deleteBancaDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
             <div class="flex items-center gap-4">
                 <i class="pi pi-exclamation-triangle !text-3xl" />
-                <span v-if="banca"
-                    >Are you sure you want to delete <b>{{ banca.name }}</b
-                    >?</span
-                >
+                <span v-if="banca">Are you sure you want to delete <b>{{ banca.name }}</b>?</span>
             </div>
             <template #footer>
                 <Button label="No" icon="pi pi-times" text @click="deleteBancaDialog = false" />

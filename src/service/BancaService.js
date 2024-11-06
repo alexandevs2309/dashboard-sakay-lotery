@@ -91,6 +91,54 @@ export const BancaService = {
         ];
     },
 
+    getBancaById(id) {
+        const banca = this.getBancasData().find(banca => banca.id === id);
+        return banca
+            ? Promise.resolve(banca)
+            : Promise.reject(new Error(`No se encontró la banca con ID ${id}`));
+    },
+
+    getBancaByCode(code) {
+        const banca = this.getBancasData().find(banca => banca.code === code);
+        return banca
+            ? Promise.resolve(banca)
+            : Promise.reject(new Error(`No se encontró la banca con código ${code}`));
+    },
+
+
+    getLotteryResults() {
+        return [
+            {
+                id: '1', image: 'lottery1.png',
+                name: 'Lotería Nacional',
+                drawTime: '10:00 AM',
+                winningNumbers: [12, 34, 56, 78, 90]
+            },
+            {
+                id: '2',
+                image: 'lottery2.png',
+                name: 'Lotería del Este',
+                drawTime: '12:00 PM',
+                winningNumbers: [22, 44, 66, 88, '00']
+            },
+            {
+                id: '3',
+                image: 'lottery3.png',
+                name: 'Lotería del Sur',
+                drawTime: '02:00 PM',
+                winningNumbers: [11, 33, 55, 77, 99]
+            }
+        ];
+    },
+
+
+    getLotteryResultsWithDetails() {
+        return Promise.resolve(this.getLotteryResults());
+    },
+
+
+
+
     getBancasMini() {
         return Promise.resolve(this.getBancasData().slice(0, 2));
     },
@@ -106,4 +154,6 @@ export const BancaService = {
     getBancasWithDetails() {
         return Promise.resolve(this.getBancasWithDetails());
     }
+
+
 };

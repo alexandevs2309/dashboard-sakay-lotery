@@ -2,7 +2,7 @@ export const PhotoService = {
     getData() {
         return [
             {
-                itemImageSrc: 'https://primefaces.org/cdn/primevue/images/galleria/galleria1.jpg',
+                itemImageSrc: 'https://cdn.pixabay.com/photo/2018/11/29/21/34/lottery-3846567_1280.jpg',
                 thumbnailImageSrc: 'https://primefaces.org/cdn/primevue/images/galleria/galleria1s.jpg',
                 alt: 'Description for Image 1',
                 title: 'Title 1'
