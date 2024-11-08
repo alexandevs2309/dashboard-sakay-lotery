@@ -13,10 +13,14 @@ import { useRoute } from 'vue-router';
 const route = useRoute()
 const banca = ref(null);
 
+const activeTab = ref(0); 
+
 onMounted(() => {
     const bancaId = route.params.id;
     BancaService.getBancaById(bancaId)
         .then(bancaData => banca.value = bancaData);
+
+        activeTab.value = 0;
 });
 
 
@@ -56,12 +60,12 @@ const deactivateBank = () => {
 
 
 <template>
+
+
     <div class="card">
         <div class="card p-6 bg-white rounded-lg shadow-md">
             <!-- Título de la sección -->
-
             <h2 class="text-2xl font-semibold text-gray-700 mb-6">Administrar Datos de la Banca</h2>
-
             <!-- Formulario -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <!-- Código banca -->
@@ -69,7 +73,6 @@ const deactivateBank = () => {
                     <label class="block text-gray-600 font-medium mb-1">Código banca:</label>
                     <InputText v-model="bankCode" placeholder="816" class="w-full" />
                 </div>
-
                 <!-- Nombre ticket -->
                 <div>
                     <label class="block text-gray-600 font-medium mb-1">Nombre ticket (Este se imprimirá en el Ticket de

@@ -108,13 +108,19 @@ const router = createRouter({
                 {
                     path: '/pages/bancaAdmin/:id',
                     name: 'bancaAdmin',
-                    component: () => import('@/views/pages/BancaAdmin.vue')
+                    component: () => import('@/views/uikit/TabmenuCustom.vue')
                 },
 
                 {
                     path: '/documentation',
                     name: 'documentation',
                     component: () => import('@/views/pages/Documentation.vue')
+                },
+
+                {
+                    path: '/empleados',
+                    name: 'empleados',
+                    component: () => import('@/views/pages/Empleados.vue')
                 }
             ]
         },
