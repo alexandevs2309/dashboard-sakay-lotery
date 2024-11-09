@@ -1,63 +1,3 @@
-<script setup>
-import { BancaService } from '@/service/BancaService';
-
-import Button from 'primevue/button';
-import Dropdown from 'primevue/dropdown';
-import InputText from 'primevue/inputtext';
-import Textarea from 'primevue/textarea';
-
-
-import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
-
-const route = useRoute()
-const banca = ref(null);
-
-const activeTab = ref(0); 
-
-onMounted(() => {
-    const bancaId = route.params.id;
-    BancaService.getBancaById(bancaId)
-        .then(bancaData => banca.value = bancaData);
-
-        activeTab.value = 0;
-});
-
-
-
-const bankCode = ref('');
-const ticketName = ref('');
-const internalName = ref('');
-const phone = ref('');
-const address = ref('');
-const useOwnBudget = ref(null);
-const createMessage = ref('');
-const createSportMessage = ref('');
-const cancelMessage = ref('');
-const cancelSportMessage = ref('');
-const winMessage = ref('');
-const winSportMessage = ref('');
-const bankType = ref(null);
-
-const budgetOptions = [{ label: 'Sí', value: true }, { label: 'No', value: false }];
-const bankTypeOptions = [{ label: 'Clásica', value: 'clasica' }, { label: 'Moderna', value: 'moderna' }];
-
-const processData = () => {
-    console.log('Procesando datos de la banca...');
-    // Aquí podrías añadir la lógica para procesar los datos
-};
-
-
-
-const deactivateBank = () => {
-    console.log('Desactivando banca...');
-    // Aquí podrías añadir la lógica para desactivar la banca
-};
-
-
-</script>
-
-
 
 <template>
 
@@ -142,7 +82,7 @@ const deactivateBank = () => {
             <!-- Tipo de Banca -->
             <div class="mb-6">
                 <label class="block text-gray-600 font-medium mb-1">Tipo de Banca:</label>
-                <Dropdown v-model="bankType" :options="bankTypeOptions" class="w-full" />
+                <Dropdown v-model="bankType" :options="bankTypeOptions" option-label="label" class="w-full" />
             </div>
 
             <!-- Botones de acción -->
@@ -153,6 +93,66 @@ const deactivateBank = () => {
         </div>
     </div>
 </template>
+
+<script setup>
+import { BancaService } from '@/service/BancaService';
+
+import Button from 'primevue/button';
+import Dropdown from 'primevue/dropdown';
+import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
+
+
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
+const banca = ref(null);
+
+const activeTab = ref(0); 
+
+onMounted(() => {
+    const bancaId = route.params.id;
+    BancaService.getBancaById(bancaId)
+        .then(bancaData => banca.value = bancaData);
+
+        activeTab.value = 0;
+});
+
+
+
+const bankCode = ref('');
+const ticketName = ref('');
+const internalName = ref('');
+const phone = ref('');
+const address = ref('');
+const useOwnBudget = ref(null);
+const createMessage = ref('');
+const createSportMessage = ref('');
+const cancelMessage = ref('');
+const cancelSportMessage = ref('');
+const winMessage = ref('');
+const winSportMessage = ref('');
+const bankType = ref(null);
+
+const budgetOptions = [{ label: 'Sí', value: true }, { label: 'No', value: false }];
+const bankTypeOptions = [{ label: 'Clásica', value: 'clasica' }, { label: 'Moderna', value: 'moderna' }];
+
+const processData = () => {
+    console.log('Procesando datos de la banca...');
+    // Aquí podrías añadir la lógica para procesar los datos
+};
+
+
+
+const deactivateBank = () => {
+    console.log('Desactivando banca...');
+    // Aquí podrías añadir la lógica para desactivar la banca
+};
+
+
+</script>
+
 
 
 <style scoped>

@@ -1,4 +1,7 @@
 import AppLayout from '@/layout/AppLayout.vue';
+import AdministrarEmpleados from '@/views/pages/AdministrarEmpleados.vue';
+import Reportes from '@/views/pages/Reportes.vue';
+import Sorteos from '@/views/pages/Sorteos.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -121,6 +124,37 @@ const router = createRouter({
                     path: '/empleados',
                     name: 'empleados',
                     component: () => import('@/views/pages/Empleados.vue')
+                },
+                // {
+                // path: '/administrar-empleados',
+                // name: 'administrar-empleados',
+                // component: () => import('@/views/pages/AdministrarEmpleados.vue')
+                // },
+                {
+                    path: '/administrar-empleados/:id',
+                    name: 'AdministrarEmpleados', // Nombre exacto que usaste en el código
+                    component: AdministrarEmpleados
+                },
+
+                {
+                    path: '/reportes',
+                    name: 'Reportes', // Nombre exacto que usaste en el código
+                    component: Reportes
+                },
+                {
+                    path: 'sorteos',
+                    name: 'Sorteos', // Nombre exacto que usaste en el código
+                    component: Sorteos
+                },
+                {
+                    path: '/facturacion',
+                    name: 'Facturacion', // Nombre exacto que usaste en el código
+                    component: () => import('@/views/pages/Facturacion.vue')
+                },
+                {
+                    path: '/ajustes',
+                    name: 'Ajustes',
+                    component: () => import('@/views/pages/Ajustes.vue')
                 }
             ]
         },
