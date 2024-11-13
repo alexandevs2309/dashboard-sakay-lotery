@@ -159,7 +159,13 @@ function getStatusLabel(status) {
                 </template>
 
                 <Column field="code" header="Code" sortable style="min-width: 12rem"></Column>
-                <Column field="name" header="Name" sortable style="min-width: 16rem"></Column>
+                <Column field="name" header="Name" sortable style="min-width: 16rem">
+                    <template #body="slotProps">
+                        <span @click="redirectToBancaAdmin(slotProps.data)" class="text-blue-500 cursor-pointer">
+                            {{ slotProps.data.name }}
+                        </span>
+                    </template>
+                </Column>
                 <Column field="location" header="Location" sortable style="min-width: 12rem"></Column>
                 <Column field="dailyRevenue" header="Daily Revenue" sortable style="min-width: 10rem">
                     <template #body="slotProps">

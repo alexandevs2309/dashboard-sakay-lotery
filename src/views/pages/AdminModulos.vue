@@ -6,7 +6,7 @@
   
       <!-- Modules Table -->
       <div class="overflow-x-auto">
-        <table class="w-full border border-gray-300 rounded-lg">
+        <table class="w-full ">
           <thead>
             <tr class="bg-gray-100">
               <th class="p-2 text-left">Nombre</th>
@@ -19,8 +19,8 @@
               <td class="p-2">{{ module.name }}</td>
               <td class="p-2">{{ module.status ? 'Activo' : 'Desactivado' }}</td>
               <td class="p-2">
-                <Button v-if="module.status" label="Desactivar" class="p-button p-button-danger mr-2" @click="toggleModule(module)" />
-                <Button v-else label="Activar" class="p-button p-button-primary" @click="toggleModule(module)" />
+                <Button v-if="module.status" label="Desactivar" icon="pi pi-times"  class="p-button p-button-danger mr-2" @click="toggleModule(module)" />
+                <Button v-else icon="pi pi-check" label="Activar" class="p-button p-button-primary" @click="toggleModule(module)" />
               </td>
             </tr>
           </tbody>

@@ -54,6 +54,7 @@ function isOutsideClicked(event) {
 </script>
 
 <template>
+    
     <div class="layout-wrapper" :class="containerClass">
         <app-topbar></app-topbar>
 

@@ -1,7 +1,8 @@
 <script setup>
 import { useLayout } from '@/layout/composables/layout';
 import { ProductService } from '@/service/ProductService';
-import { onMounted, ref, watch } from 'vue';
+import InputText from 'primevue/inputtext';
+import { computed, onMounted, ref, watch } from 'vue';
 
 // Importar valores de tema y colores
 const { getPrimary, getSurface, isDarkTheme } = useLayout();
@@ -12,6 +13,8 @@ const chartData = ref(null);
 const chartData2 = ref(null);
 const chartOptions = ref(null);
 const chartOptions2 = ref(null);
+
+const loading = ref(false);
 
 // Datos de loterías y opciones de menú
 const lotteries = ref([
@@ -88,11 +91,76 @@ onMounted(() => {
     chartOptions2.value = getChartOptions2();
 });
 
+const mostrarDialog = ref(false);
+const codigo = ref(null);
+const error = ref(false);
 
+const validarHexadecimal = () => {
+    error.value = !/^[0-9A-Fa-f]+$/.test(codigo.value);
+};
+
+const procesarCodigo = () => {
+    if (!error.value) {
+        // Aquí procesarías el código hexadecimal ingresado
+        console.log("Código hexadecimal válido:", codigo.value);
+        mostrarDialog.value = false;
+    }
+
+
+    return {
+        mostrarDialog,
+        codigo,
+        error,
+        validarHexadecimal,
+        procesarCodigo,
+    };
+};
 watch([getPrimary, getSurface, isDarkTheme], () => {
     chartData.value = getChartData();
     chartOptions.value = getChartOptions();
 });
+
+
+const position = ref('center');
+const visible = ref(false);
+
+const openPosition = (pos) => {
+    position.value = pos;
+    visible.value = true;
+}
+
+const mayus = computed({
+    get: () => codigo.value?.toUpperCase() ?? "",
+    set: (valor) => codigo.value = valor
+});
+
+
+
+const dialogoTicketVisible = ref(false);
+
+// Función para mostrar el ticket después de activar el preloader
+const saveAndShowTicket = () => {
+    loading.value = true; // Activar el preloader
+    setTimeout(() => {
+        loading.value = false; // Desactivar el preloader
+        dialogoTicketVisible.value = true; // Mostrar el diálogo de ticket
+    }, 1000); // Simular un tiempo de espera
+};
+
+// Datos de ejemplo para el ticket, deben ser reemplazados con datos reales
+const detallesTicket = ref({
+    apuestas: [
+        { combinacion: '10-10', loteria: 'FL', horario: 'N', fecha: '19/May/20', monto: '20.00' },
+        { combinacion: '10-11', loteria: 'FL', horario: 'N', fecha: '19/May/20', monto: '41.00' },
+        { combinacion: '10-12', loteria: 'FL', horario: 'N', fecha: '19/May/20', monto: '41.00' },
+        { combinacion: '10-14', loteria: 'FL', horario: 'N', fecha: '19/May/20', monto: '100.00' },
+        { combinacion: '15-15-15', loteria: 'FL', horario: 'N', fecha: '19/May/20', monto: '2.00' },
+    ],
+    creadoPor: 'Juan Lopez',
+    fechaImpresion: '2020-05-19 19:58:27',
+    montoTotal: 204
+});
+
 </script>
 
 
@@ -109,10 +177,68 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
         </div>
         <div class="flex space-x-2">
             <Button label="Enviar alerta" icon="pi pi-exclamation-triangle" class="p-button-warning" />
-            <Button label="Ver Ticket" icon="pi pi-eye" class="p-button-info" />
+            <Button label="Ver Ticket" icon="pi pi-eye" class="p-button-info" @click="openPosition('top')" />
         </div>
+
+
     </div>
 
+<!-- Diálogo de código -->
+<Dialog v-model:visible="visible" header="Revisar Ticket" :style="{ width: '25rem' }" :position="position" :modal="true" :draggable="false">
+        <span class="text-surface-500 dark:text-surface-400 block mb-8">Ingrese Codigo del Ticket.</span>
+        <div class="flex items-center gap-4 mb-4">
+            <label for="code" class="font-semibold w-24">Codigo</label>
+            <InputText id="codigoHex" v-model="mayus" @input="validarHexadecimal" class="flex-auto" autocomplete="on" />
+            <small v-if="error" class="p-error">Código inválido</small> 
+        </div>
+        <div class="flex justify-end gap-2">
+            <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
+            <Button type="button" label="Save" @click="saveAndShowTicket" :loading="loading" ></Button>
+        </div>
+    </Dialog>
+
+    <!-- Diálogo de Ticket -->
+    <Dialog v-model:visible="dialogoTicketVisible" header="Detalles del Ticket" :style="{ width: '30rem' }" modal :draggable="false">
+        <div>
+            <!-- Contenido del ticket -->
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-lg">Jugada EEJTEK</h2>
+                <span class="bg-blue-500 text-white rounded-md px-2 py-1">Válida</span>
+            </div>
+            <!-- Tabla para mostrar los detalles del ticket -->
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="text-gray-600">
+                        <th class="py-2 px-4 border-b">Combinación</th>
+                        <th class="py-2 px-4 border-b">Lotería</th>
+                        <th class="py-2 px-4 border-b">Horario</th>
+                        <th class="py-2 px-4 border-b">Fecha</th>
+                        <th class="py-2 px-4 border-b">Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(apuesta, indice) in detallesTicket.apuestas" :key="indice">
+                        <td class="py-2 px-4 border-b">{{ apuesta.combinacion }}</td>
+                        <td class="py-2 px-4 border-b">{{ apuesta.loteria }}</td>
+                        <td class="py-2 px-4 border-b">{{ apuesta.horario }}</td>
+                        <td class="py-2 px-4 border-b">{{ apuesta.fecha }}</td>
+                        <td class="py-2 px-4 border-b">{{ apuesta.monto }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mt-4">
+                <p><strong>Creado por:</strong> {{ detallesTicket.creadoPor }}</p>
+                <p><strong>Fecha impresión:</strong> {{ detallesTicket.fechaImpresion }}</p>
+                <p><strong>Monto total:</strong> {{ detallesTicket.montoTotal }}</p>
+            </div>
+            <div class="flex justify-end gap-2 mt-6">
+                <Button type="button" label="Cerrar" severity="secondary" @click="dialogoTicketVisible = false"></Button>
+                <Button type="button" label="Cancelar Jugada" class="p-button-danger"></Button>
+            </div>
+        </div>
+    </Dialog>
+
+   
     <!-- Grilla de tarjetas de resumen -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Tarjeta: Loterías -->

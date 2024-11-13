@@ -42,7 +42,7 @@
                 <!-- Utilizar presupuesto propio -->
                 <div>
                     <label class="block text-gray-600 font-medium mb-1">Utilizar presupuesto propio:</label>
-                    <Dropdown v-model="useOwnBudget" :options="budgetOptions" class="w-full" />
+                    <Dropdown v-model="useOwnBudget" :options="budgetOptions" option-label="label" class="w-full" />
                 </div>
             </div>
 
