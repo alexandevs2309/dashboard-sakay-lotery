@@ -1,109 +1,155 @@
 <template>
-    <div class="layout-sidebar">
-        <ul class="custom-layout-menu">
-            <li v-for="item in menuItems" :key="item.label" class="menu-item-container">
-                <router-link :to="item.routerLink" class="menu-item" @click="toggleSubMenu(item)">
-                    <i :class="item.iconClass"></i>
-                    <span>{{ item.label }}</span>
-                </router-link>
-                <ul v-if="item.submenuVisible" :class="['submenu', item.label === 'Bancas' ? 'floating-submenu' : '']">
-                    <li v-for="subItem in item.submenuItems" :key="subItem.label">
-                        <router-link :to="subItem.routerLink" class="submenu-item">
-                            <i :class="subItem.iconClass"></i>
-                            <span>{{ subItem.label }}</span>
-                        </router-link>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+  <div class="layout-sidebar">
+      <ul class="custom-layout-menu">
+          <li v-for="item in menuItems" :key="item.label" class="menu-item-container">
+              <router-link :to="item.routerLink" class="menu-item" @click="toggleSubMenu(item)">
+                  <i :class="item.iconClass"></i>
+                  <span>{{ item.label }}</span>
+              </router-link>
+              <ul v-if="item.hasSubmenu && item.submenuVisible" :class="['submenu', 'floating-submenu']">
+                  <li v-for="subItem in item.submenuItems" :key="subItem.label">
+                      <router-link :to="subItem.routerLink" class="submenu-item">
+                          <i :class="subItem.iconClass"></i>
+                          <span>{{ subItem.label }}</span>
+                      </router-link>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+  </div>
 </template>
 
-  
-  <script setup>
-  import { ref } from 'vue';
-  
+<script setup>
+
+
+import { onBeforeUnmount, onMounted, ref } from 'vue';
+
   const menuItems = ref([
-    { label: 'Panel', iconClass: 'pi pi-home', routerLink: '/'},
-    { label: 'Cuadres', iconClass: 'pi pi-calendar', routerLink: '/pages/crud',  },
-    { label: 'Sorteos', iconClass: 'pi pi-ticket', routerLink: '/sorteos', },
-    { label: 'Empleados', iconClass: 'pi pi-users', routerLink: '/empleados', },
+    { label: 'Panel', iconClass: 'pi pi-home', routerLink: '/' },
+    { label: 'Cuadres', iconClass: 'pi pi-money-bill', routerLink: '/pages/cuadre' },
+    { label: 'Sorteos', iconClass: 'pi pi-calendar', routerLink: '/sorteos' },
+    { label: 'Empleados', iconClass: 'pi pi-users', routerLink: '/empleados' },
     {
-      label: 'Bancas',
-      iconClass: 'pi pi-building',
+        label: 'Bancas',
+        iconClass: 'pi pi-building',
+        routerLink: '#',
+        hasSubmenu: true,
+        submenuVisible: false,
+        submenuItems: [
+            { label: 'Listas de Bancas', iconClass: 'pi pi-list', routerLink: '/pages/listabancas' },
+            { label: 'Crear Banca', iconClass: 'pi pi-plus', routerLink: '/pages/bancas/new' },
+            { label: 'Duplicar', iconClass: 'pi pi-clone', routerLink: '#' }
+      ]
+  },
+  {
+      label: 'Reportes',
+      iconClass: 'pi pi-chart-line',
       routerLink: '#',
+      hasSubmenu: true,
       submenuVisible: false,
       submenuItems: [
-        { label: 'Listas de Bancas', iconClass: 'pi pi-list', routerLink: '/pages/listabancas' },
-        { label: 'Crear Banca', iconClass: 'pi pi-plus', routerLink: '/pages/bancas/new' },
-        { label: 'Duplicar', iconClass: 'pi pi-clone', routerLink: '#' }
+          { label: 'Premios', iconClass: 'pi pi-file', routerLink: '/pages/ReportesPremios' },
+          { label: 'Resumen Banquer@s ', iconClass: 'pi pi-file', routerLink: '/pages/ReporteDeEmpleados' },
+          { label: 'Analisis de riegos', iconClass: 'pi pi-file', routerLink: '/pages/AnalisisdeRiesgos' },
+         
       ]
-    },
-    { label: 'Reportes', iconClass: 'pi pi-chart-line', routerLink: '/reportes',  },
-    { label: 'Facturación', iconClass: 'pi pi-dollar', routerLink: '/facturacion', },
-    { label: 'Ajustes', iconClass: 'pi pi-cog', routerLink: '/ajustes',  }
-  ]);
+  },
+  { label: 'Ajustes', 
+    iconClass: 'pi pi-cog',
+    routerLink: '#',
+    hasSubmenu: true,
+    submenuVisible: false,
+    submenuItems: [
+       {label: 'Consorcios' , iconClass: '  pi pi-star', routerLink: '/consorcios' },
+       {label: 'Restrcciones' , iconClass: 'pi pi-ban', routerLink: '/restricciones' },
+       {label: 'Cierres De Loteruas' , iconClass: 'pi pi-times-circle', routerLink: '/cierres' },
+       {label: 'Configurar Puntos de Fidelidad', iconClass: 'pi pi-cog', routerLink: '/puntos'}
+    ] 
   
-  const toggleSubMenu = (item) => {
-    item.submenuVisible = !item.submenuVisible;
-  };
-  </script>
+  },
+  { label: 'Facturación', iconClass: 'pi pi-dollar', routerLink: '/facturacion' },
+]);
+
+const toggleSubMenu = (item) => {
+  item.submenuVisible = !item.submenuVisible;
+};
+
+const handleClickOutside = (event) => {
+    menuItems.value.forEach(item => {
+        if (item.submenuVisible && !event.target.closest('.menu-item-container')) {
+            item.submenuVisible = false;
+        }
+    });
+};
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
+</script>
+
+<style scoped>
+/* Estilos para la barra lateral y el menú */
+
+.layout-sidebar {
+  background-color: #fff;
+  color: #888;
+  height: 100vh;
+  width: 100px;
+  z-index: 997;
+  margin-left: 0px;
+  margin-top: 0;
+  position: fixed;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
+  overflow-y: visible;
+}
+
+.custom-layout-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.menu-item-container {
+  position: relative;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.7rem;
+  margin: 0px 0px;
+  color: #888;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  width: 100%;
   
-  <style scoped>
-  .layout-sidebar {
-    background-color: #fff;
-    color: #888;
-    height: 100vh;
-    width: 180px;
-    z-index: 997;
-    margin-left: 10px;
-    padding: 1rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05),
-      0px 1px 4px rgba(0, 0, 0, 0.08);
-    overflow-y: visible;
-  }
-  
-  .custom-layout-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-  }
-  
-  .menu-item-wrapper {
-    position: relative;
-  }
-  
-  .menu-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 1rem;
-    color: #888;
-    text-decoration: none;
-    transition: color 0.2s ease-in-out;
-    width: 100%;
-  }
-  
-  .menu-item:hover {
-    color: #007bff;
-  }
-  
-  .menu-item i {
-    font-size: 1.5rem;
-    margin-right: 10px;
-  }
-  
-  .menu-item span {
-    font-size: 1rem;
-    text-align: left;
-  }
-  
-  /* Estilo del submenú flotante */
-  .floating-submenu {
+}
+
+.menu-item:hover {
+  color: #007bff;
+}
+
+.menu-item i {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.menu-item span {
+  font-size: 1rem;
+  text-align: left;
+}
+
+.floating-submenu {
     position: absolute;
     top: 0;
     left: 55%;
@@ -113,21 +159,31 @@
     border-radius: 5px;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15);
     z-index: 999;
-    min-width: 150px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Espacio entre los elementos del submenú */
 .floating-submenu .submenu-item {
+    display: block;
     padding: 0.5rem;
+    margin-top: 0.5rem; 
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+
+/* Remueve el margen inferior del último elemento */
+.floating-submenu .submenu-item:last-child {
+    margin-bottom: 0;
 }
 
 .floating-submenu .submenu-item:hover {
     color: #007bff;
 }
 
-.menu-item-container {
-    position: relative;
-}
 
 
-  </style>
-  
+
+</style>

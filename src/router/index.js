@@ -17,6 +17,13 @@ const router = createRouter({
                     component: () => import('@/views/Dashboard.vue')
                 },
                 {
+                    path: '/pages/cuadre',
+                    name: 'cuadre',
+                    component: () => import('@/views/pages/Cuadre.vue')
+                },
+
+
+                {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
                     component: () => import('@/views/uikit/FormLayout.vue')
@@ -112,6 +119,24 @@ const router = createRouter({
                     path: '/pages/bancaAdmin/:id',
                     name: 'bancaAdmin',
                     component: () => import('@/views/uikit/TabmenuCustom.vue')
+                },
+
+                {
+                    path: '/pages/AnalisisdeRiesgos',
+                    name: 'AnalisisdeRiesgos',
+                    component: () => import('@/views/pages/AnalisisdeRiesgos.vue')
+                },
+
+                {
+                    path: '/pages/ReportesPremios',
+                    name: 'ReportesPremios',
+                    component: () => import('@/views/pages/ReportesPremios.vue')
+                },
+
+                {
+                    path: '/pages/ReporteDeEmpleados',
+                    name: 'ReporteDeEmpleados',
+                    component: () => import('@/views/pages/ReporteDeEmpleados.vue')
                 },
 
                 {
