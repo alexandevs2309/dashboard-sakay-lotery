@@ -1,4 +1,5 @@
 import AppLayout from '@/layout/AppLayout.vue';
+import Cuadre_user from '@/views/cuadres/cuadre_user.vue';
 import AdministrarEmpleados from '@/views/pages/AdministrarEmpleados.vue';
 import Reportes from '@/views/pages/Reportes.vue';
 import Sorteos from '@/views/pages/Sorteos.vue';
@@ -22,6 +23,12 @@ const router = createRouter({
                     component: () => import('@/views/pages/Cuadre.vue')
                 },
 
+
+                {
+                    path: "/cuadre_user/:id",
+                    name: "cuadre_user",
+                    component: Cuadre_user
+                },
 
                 {
                     path: '/uikit/formlayout',

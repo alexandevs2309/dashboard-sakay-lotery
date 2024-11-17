@@ -61,6 +61,7 @@
   </template>
   
   <script>
+import router from "@/router";
 import Button from "primevue/button";
 import Column from "primevue/column";
 import DataTable from "primevue/datatable";
@@ -80,6 +81,7 @@ import { computed, ref } from "vue";
       // Datos de ejemplo para la tabla de cuadre
       const cuadreData = ref([
         {
+          id: 1, // ID del empleado
           empleado: "Juan Lopez",
           ingresoLoterias: "0",
           premiosPagados: "0 | 0",
@@ -90,7 +92,8 @@ import { computed, ref } from "vue";
           cierre: "400.00",
         },
         {
-          empleado: "Juan Lopez",
+          id: 2, // ID del empleado
+          empleado: "Ana Gómez",
           ingresoLoterias: "1,430",
           premiosPagados: "0 | 0",
           totalLoterias: "1,430",
@@ -99,7 +102,8 @@ import { computed, ref } from "vue";
           balance: "1,287",
           cierre: "1,287.00",
         },
-      ]);
+]);
+
   
 
       
@@ -122,7 +126,10 @@ import { computed, ref } from "vue";
       };
   
       const goToCuadre = (data) => {
-        console.log("Ir al cuadro de:", data.empleado);
+
+        router.push({ name: "cuadre_user", params: { id: data.id } });
+
+        console.log("Ir al cuadre de:", data.empleado);
       };
   
       return {
