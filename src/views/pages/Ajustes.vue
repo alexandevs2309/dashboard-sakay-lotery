@@ -8,14 +8,13 @@
         </div>
         <div class="flex items-center space-x-4">
           <span>Idioma</span>
-          <Dropdown v-model="selectedLanguage" :options="languages" optionLabel="label" class="w-full md:w-1/2" />
+          <Select v-model="selectedLanguage" :options="languages" optionLabel="label" class="w-full md:w-1/2" />
         </div>
       </div>
     </div>
   </template>
   
   <script setup>
-  import Dropdown from 'primevue/dropdown';
 import ToggleButton from 'primevue/togglebutton';
 import { ref } from 'vue';
   

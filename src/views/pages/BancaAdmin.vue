@@ -42,7 +42,7 @@
                 <!-- Utilizar presupuesto propio -->
                 <div>
                     <label class="block text-gray-600 font-medium mb-1">Utilizar presupuesto propio:</label>
-                    <Dropdown v-model="useOwnBudget" :options="budgetOptions" option-label="label" class="w-full" />
+                    <Select v-model="useOwnBudget" :options="budgetOptions" option-label="label" class="w-full" />
                 </div>
             </div>
 
@@ -82,7 +82,7 @@
             <!-- Tipo de Banca -->
             <div class="mb-6">
                 <label class="block text-gray-600 font-medium mb-1">Tipo de Banca:</label>
-                <Dropdown v-model="bankType" :options="bankTypeOptions" option-label="label" class="w-full" />
+                <Select v-model="bankType" :options="bankTypeOptions" option-label="label" class="w-full" />
             </div>
 
             <!-- Botones de acción -->
@@ -98,7 +98,6 @@
 import { BancaService } from '@/service/BancaService';
 
 import Button from 'primevue/button';
-import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 

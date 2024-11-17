@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     <label class="block text-gray-700 font-medium mb-1">Jugada a mostrar</label>
-                    <Dropdown :options="playOptions" option-label="label" placeholder="Todos" class="w-full" 
+                    <Select :options="playOptions" option-label="label" placeholder="Todos" class="w-full" 
                     v-model="selectedPlayOption"
                     />
                     
@@ -46,7 +46,6 @@
 <script setup>
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
-import Dropdown from 'primevue/dropdown';
 import { ref } from 'vue';
 
 const FechaInicial = ref();

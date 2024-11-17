@@ -4,7 +4,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
         <!-- Selección de Fecha -->
         <div class="col-span-1">
-          <Calendar v-model="selectedDate" dateFormat="yy-mm-dd" placeholder="Seleccione una fecha" class="w-full" />
+          <DatePicker v-model="selectedDate" dateFormat="yy-mm-dd" placeholder="Seleccione una fecha" class="w-full" />
         </div>
   
         <!-- Botones de Acción -->

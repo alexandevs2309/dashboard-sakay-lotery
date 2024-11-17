@@ -26,11 +26,11 @@
 
                   <div>
                       <label class="block text-gray-600">Hora Entrada</label>
-                      <Calendar v-model="employee.startTime" timeOnly hourFormat="12" placeholder=" 09:00 AM" class="w-full" />
+                      <DatePicker v-model="employee.startTime" timeOnly hourFormat="12" placeholder=" 09:00 AM" class="w-full" />
                   </div>
                   <div>
                       <label class="block text-gray-600">Hora Salida</label>
-                      <Calendar v-model="employee.endTime" timeOnly hourFormat="12" placeholder="10:00 PM" class="w-full" />
+                      <DatePicker v-model="employee.endTime" timeOnly hourFormat="12" placeholder="10:00 PM" class="w-full" />
                   </div>
 
                   <div>
@@ -44,11 +44,11 @@
 
                   <div>
                       <label class="block text-gray-600">Tamaño tickets</label>
-                      <Dropdown v-model="employee.ticketSize" :options="ticketSizes" optionLabel="label" class="w-full" />
+                      <Select v-model="employee.ticketSize" :options="ticketSizes" optionLabel="label" class="w-full" />
                   </div>
                   <div>
                       <label class="block text-gray-600">Zona horaria</label>
-                      <Dropdown v-model="employee.timeZone" :options="timeZones" optionLabel="label" class="w-full" />
+                      <Select v-model="employee.timeZone" :options="timeZones" optionLabel="label" class="w-full" />
                   </div>
               </div>
 
@@ -96,9 +96,8 @@
 
 <script setup>
 import Button from 'primevue/button';
-import Calendar from 'primevue/calendar';
-import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
+import Select from 'primevue/select';
 import TabPanel from 'primevue/tabpanel';
 import TabView from 'primevue/tabview';
 

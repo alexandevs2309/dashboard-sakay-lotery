@@ -11,7 +11,7 @@
       <!-- Dropdown for Presupuesto -->
       <div class="flex items-center mb-4">
         <label for="presupuesto" class="mr-2">Presupuesto:</label>
-        <Dropdown :options="presupuestoOptions" v-model="selectedPresupuesto" placeholder="Seleccionar" class="w-full md:w-1/2" />
+        <Select :options="presupuestoOptions" v-model="selectedPresupuesto" placeholder="Seleccionar" class="w-full md:w-1/2" />
       </div>
   
       <!-- Game and Capital Table -->
@@ -44,13 +44,12 @@
 <script>
   
   import Button from 'primevue/button';
-import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import { ref } from 'vue';
 
   export default {
     components: {
-      Dropdown,
+      Select,
       InputText,
       Button,
     },

@@ -8,7 +8,7 @@
       <!-- Fecha Inicial -->
       <div class="col-span-1">
         <label for="startDate" class="text-sm font-medium">Fecha Inicial</label>
-        <Calendar
+        <DatePicker
           id="startDate"
           v-model="startDate"
           dateFormat="dd/mm/yy"
@@ -20,7 +20,7 @@
       <!-- Fecha Final -->
       <div class="col-span-1">
         <label for="endDate" class="text-sm font-medium">Fecha Final</label>
-        <Calendar
+        <DatePicker
           id="endDate"
           v-model="endDate"
           dateFormat="dd/mm/yy"

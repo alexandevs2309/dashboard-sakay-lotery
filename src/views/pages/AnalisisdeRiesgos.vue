@@ -1,125 +1,3 @@
-<!-- <template> -->
-  <!-- <div class="p-6"> -->
-    <!-- Header -->
-    <!-- <h2 class="text-lg font-semibold mb-4">Análisis de riesgo</h2> -->
-
-    <!-- Filter Section -->
-    <!-- <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-      <div class="col-span-1">
-        <label for="startDate" class="text-sm font-medium">Fecha Inicial</label>
-        <Calendar id="startDate" v-model="startDate" dateFormat="mm/dd/yy" placeholder="MM/DD/YYYY" class="w-full" />
-      </div>
-      <div class="col-span-1">
-        <label for="endDate" class="text-sm font-medium">Fecha Final</label>
-        <Calendar id="endDate" v-model="endDate" dateFormat="mm/dd/yy" placeholder="MM/DD/YYYY" class="w-full" />
-      </div>
-      <div class="col-span-1">
-        <label for="lottery" class="text-sm font-medium">Lotería</label>
-        <Dropdown id="lottery" v-model="selectedLottery" :options="lotteries" optionLabel="name" placeholder="Seleccionar Lote" class="w-full" />
-      </div>
-      <div class="col-span-1">
-        <label for="time" class="text-sm font-medium">Horario</label>
-        <DatePicker 
-        id="time"
-        v-model="time"
-        timeOnly
-        hourFormat="12"
-        placeholder="Seleccionar hora"
-        class="w-full"
-        
-        />
-      </div>
-      <div class="col-span-1 flex items-end">
-        <Button label="Filtrar" icon="pi pi-search" class="p-button p-button-primary w-full" @click="filterResults" />
-      </div>
-    </div> -->
-
-    <!-- Results Section -->
-    <!-- <div class="space-y-6">
-      <div v-for="category in categories" :key="category.name" class="border-t pt-4">
-        <h3 class="text-md font-semibold mb-2">{{ category.name }}</h3>
-        <table class="w-full border border-gray-300 rounded-lg">
-          <thead>
-            <tr class="bg-gray-100">
-              <th class="p-2 text-left">Jugada</th>
-              <th class="p-2 text-left">Lotería</th>
-              <th class="p-2 text-left">Monto</th>
-              <th class="p-2 text-left">Horario</th>
-              <th class="p-2 text-left">Premio</th>
-              <th class="p-2 text-left">Tiempo al cierre</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-if="category.items.length === 0">
-              <td class="p-2 text-center text-gray-500" colspan="6">No hay jugadas realizadas hasta el momento.</td>
-            </tr>
-            <tr v-for="item in category.items" :key="item.id" class="border-b">
-              <td class="p-2">{{ item.play }}</td>
-              <td class="p-2">{{ item.lottery }}</td>
-              <td class="p-2">{{ item.amount }}</td>
-              <td class="p-2">{{ item.time }}</td>
-              <td class="p-2">{{ item.prize }}</td>
-              <td class="p-2">{{ item.timeToClose }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div> -->
-<!-- </template> -->
-
-<!-- <script>
-import Button from 'primevue/button';
-import Calendar from 'primevue/calendar';
-import DatePicker from 'primevue/datepicker';
-import Dropdown from 'primevue/dropdown';
-import InputText from 'primevue/inputtext';
-import { ref } from 'vue';
-
-export default {
-  components: {
-    Calendar,
-    Dropdown,
-    Button,
-    InputText,
-  },
-  setup() {
-    const startDate = ref(null);
-    const endDate = ref(null);
-    const selectedLottery = ref(null);
-    const time = ref('');
-    const datetime12h = ref();
-
-    const lotteries = ref([
-      { name: 'Lotería 1', code: 'L1' },
-      { name: 'Lotería 2', code: 'L2' },
-      // Agrega más loterías según sea necesario
-    ]);
-
-    const categories = ref([
-      { name: 'Quinielas', items: [] },
-      { name: 'Pales', items: [] },
-      { name: 'Super_pales', items: [] },
-      { name: 'Tripletas', items: [] },
-    ]);
-
-    const filterResults = () => {
-      console.log("Filtrando resultados");
-    };
-
-    return {
-      startDate,
-      endDate,
-      selectedLottery,
-      time,
-      lotteries,
-      categories,
-      filterResults,
-    };
-  },
-};
-</script> -->
-
 
 <template>
   <div class="p-6">
@@ -131,11 +9,11 @@ export default {
       <!-- Fecha Inicial -->
       <div class="col-span-1">
         <label for="startDate" class="text-sm font-medium">Fecha Inicial</label>
-        <Calendar
+        <DatePicker
           id="startDate"
           v-model="startDate"
           dateFormat="mm/dd/yy"
-          placeholder="MM/DD/YYYY"
+          placeholder="Fecha Inicial"
           class="w-full"
         />
       </div>
@@ -143,19 +21,22 @@ export default {
       <!-- Fecha Final -->
       <div class="col-span-1">
         <label for="endDate" class="text-sm font-medium">Fecha Final</label>
-        <Calendar
+        <DatePicker
           id="endDate"
           v-model="endDate"
           dateFormat="mm/dd/yy"
-          placeholder="MM/DD/YYYY"
+          placeholder="Fecha Final"
           class="w-full"
         />
       </div>
 
+
+    
+
       <!-- Lotería -->
       <div class="col-span-1">
         <label for="lottery" class="text-sm font-medium">Lotería</label>
-        <Dropdown
+        <Select
           id="lottery"
           v-model="selectedLottery"
           :options="lotteries"
@@ -168,7 +49,7 @@ export default {
       <!-- Horario -->
       <div class="col-span-1">
   <label for="time" class="text-sm font-medium">Horario</label>
-  <Calendar
+  <DatePicker
     id="time"
     v-model="time"
     timeOnly
@@ -236,15 +117,13 @@ export default {
 
 <script>
 import Button from 'primevue/button';
-import Calendar from 'primevue/calendar';
-import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import { ref } from 'vue';
 
 export default {
   components: {
-    Calendar,
-    Dropdown,
+    DatePicker,
+    Select,
     Button,
     InputText,
   },

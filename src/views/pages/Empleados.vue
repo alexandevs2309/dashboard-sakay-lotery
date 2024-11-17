@@ -1,6 +1,5 @@
 <script setup>
 import Button from 'primevue/button';
-import Calendar from 'primevue/calendar';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Dialog from 'primevue/dialog';
@@ -173,14 +172,14 @@ const goToEmployeeAdmin = (employeeId) => {
 
     <!-- Campo de Hora de Entrada con AM/PM -->
     <div class="flex space-x-2">
-      <Calendar v-model="newEmployee.startTime" timeOnly hourFormat="12" placeholder="Hora Entrada" class="w-full" />
-      <Dropdown v-model="newEmployee.startPeriod" :options="timePeriods" placeholder="AM/PM" class="w-1/3" />
+      <DatePicker v-model="newEmployee.startTime" timeOnly hourFormat="12" placeholder="Hora Entrada" class="w-full" />
+      <Select v-model="newEmployee.startPeriod" :options="timePeriods" placeholder="AM/PM" class="w-1/3" />
     </div>
 
     <!-- Campo de Hora de Salida con AM/PM -->
     <div class="flex space-x-2">
-      <Calendar v-model="newEmployee.endTime" timeOnly hourFormat="12" placeholder="Hora Salida" class="w-full" />
-      <Dropdown v-model="newEmployee.endPeriod" :options="timePeriods" placeholder="AM/PM" class="w-1/3" />
+      <DatePicker v-model="newEmployee.endTime" timeOnly hourFormat="12" placeholder="Hora Salida" class="w-full" />
+      <Select v-model="newEmployee.endPeriod" :options="timePeriods" placeholder="AM/PM" class="w-1/3" />
     </div>
     
     <InputText v-model="newEmployee.deviceCode" placeholder="Código Dispositivo" class="w-full" :disabled="true" />
